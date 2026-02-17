@@ -1,18 +1,176 @@
-/**
-  |============================
-  | include css partials with
-  | default @import url()
-  |============================
-*/
-/* Common styles */
 @import url('./reset.css');
 @import url('./base.css');
 @import url('./container.css');
-@import url('./animations.css');
 
-/* Sections style */
-@import url('./header.css');
-@import url('./vite-promo.css');
-@import url('./badges.css');
-@import url('./back-link.css');
-@import url('./footer.css');
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 0;
+}
+
+main .gallery-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 125px;
+  height: 40px;
+  background-color: #4e75ff;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+  transition: 0.25s;
+  border-color: transparent;
+
+  &:hover {
+    background-color: #6c8cff;
+  }
+}
+
+main .gallery-btn.shown {
+  display: none;
+}
+
+.form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+  margin-bottom: 30px;
+
+  & input {
+    border-radius: 4px;
+    width: 272px;
+    padding: 7px 16px;
+    border: 1px solid #808080;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: #2e2f42;
+    outline: transparent;
+    transition: 0.25s;
+
+    &::placeholder {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: 0.04em;
+      color: #808080;
+    }
+
+    &:hover {
+      border: 1px solid #000;
+    }
+
+    &:focus {
+      border: 1px solid #4e75ff;
+    }
+  }
+
+  & button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 10px;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: #fff;
+    outline: transparent;
+    background-color: #4e75ff;
+    transition: 0.25s;
+    border: transparent;
+
+    &:hover {
+      background-color: #6c8cff;
+    }
+  }
+}
+
+.gallery {
+  width: 1128px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 32px;
+
+  & .list-item {
+    display: flex;
+    flex-direction: column;
+    width: calc((100% - 48px) / 3);
+    height: 200px;
+    border: 1px solid #808080;
+
+    & > a {
+      display: block;
+      & > img {
+        width: 100%;
+        height: 152px;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+    & .list-content {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+
+      & div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        & h2 {
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 1.33333;
+          letter-spacing: 0.04em;
+          color: #2e2f42;
+        }
+        & p {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 2;
+          letter-spacing: 0.04em;
+          color: #2e2f42;
+        }
+      }
+    }
+  }
+}
+
+.loader {
+  margin: 10px auto;
+  width: 48px;
+  height: 48px;
+  border: 5px solid #000000;
+  border-radius: 50%;
+  display: none;
+  /*box-sizing: border-box;*/
+  position: relative;
+  animation: pulse 2s linear infinite;
+}
+
+@keyframes scaleUp {
+  0% { transform: translate(-50%, -50%) scale(0) }
+  60% , 100% { transform: translate(-50%, -50%)  scale(1)}
+}
+@keyframes pulse {
+  0% , 60% , 100%{ transform:  scale(1) }
+  80% { transform:  scale(1.2)}
+}
