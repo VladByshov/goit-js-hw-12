@@ -67,7 +67,7 @@ async function onSubmitForm(event) {
     hideLoadMoreButton();
     console.log(error.message);
     iziToast.show({
-      message: 'Please enter a search query!',
+      message: 'An error occurred on the server side, please try again!',
       backgroundColor: `#EF4040`,
       messageColor: `#ffffff`,
       position: `topRight`,
@@ -80,33 +80,42 @@ async function onSubmitForm(event) {
 }
 
 async function onLoadMoreClick() {
+  pageNum += 1;
+  hideLoadMoreButton();
   showLoader();
   try {
-    pageNum += 1;
     const { hits } = await request(resInput, pageNum);
-    if (pageNum < totalPages) {
-      showLoadMoreButton();
-    } else if (pageNum === totalPages) {
-      iziToast.show({
-        message: 'Sorry!',
-        backgroundColor: `#EF4040`,
-        messageColor: `#ffffff`,
-        position: `topRight`,
-        maxWidth: `432px`,
-      });
-      hideLoadMoreButton();
-    }
 
     createGallery(hits);
-    getBoundingClientRect();
-    hideLoader();
+
+    const element = document.querySelector('.gallery li');
+    if (element) {
+      const scrollDistance = element.getBoundingClientRect();
+      window.scrollBy({
+        top: scrollDistance.height * 2,
+        behavior: 'smooth',
+      });
+    }
+
+    if (pageNum >= totalPages) {
+      hideLoadMoreButton();
+      iziToast.error({
+        message: `We're sorry, but you've reached the end of search results.`,
+        position: 'topRight',
+      });
+    } else {
+      showLoadMoreButton();
+    }
   } catch (error) {
+    iziToast.show({
+      message: 'An error occurred on the server side, please try again!',
+      backgroundColor: `#EF4040`,
+      messageColor: `#ffffff`,
+      position: `topRight`,
+      maxWidth: `432px`,
+    });
     console.log(error);
+  } finally {
+    hideLoader();
   }
-}
-function getBoundingClientRect() {
-  window.scrollBy({
-    top: 1080,
-    behavior: 'smooth',
-  });
 }
